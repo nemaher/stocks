@@ -3,6 +3,9 @@
 schedules:
 - cron: "50 22 * * *"
   displayName: Daily midnight run
+  branches:
+    include:
+    - master
 
 pool:
   vmImage: 'ubuntu-latest'
