@@ -27,7 +27,7 @@ stages:
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         containerRegistry: |
           dockerHub
-        repository: repository/docker/nemaher/stocks
+        repository: nemaher/stocks
         tags: |
           latest
 
