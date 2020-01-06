@@ -5,6 +5,7 @@ pool:
 
 steps:
 - script: |
+    docker login --username nemaher --password $pwd
     docker pull docker.io/nemaher/stocks
     docker run nemaher/stocks
   displayName: 'Run Docker Image'
