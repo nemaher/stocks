@@ -1,5 +1,9 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
+schedules:
+- cron: "50 22 * * *"
+  displayName: Daily midnight run
+
 pool:
   vmImage: 'ubuntu-latest'
 
