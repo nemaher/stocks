@@ -29,5 +29,5 @@ stages:
           dockerHub
         repository: repository/docker/nemaher/stocks
         tags: |
-          $(tag)
+          latest
 
