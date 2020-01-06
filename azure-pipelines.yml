@@ -27,7 +27,7 @@ stages:
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         tags: |
           $(tag)
-    - task: DockerPush
+    - task: Docker@2
       displayName: Push image
       inputs:
         containerRegistry: |
