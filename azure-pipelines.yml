@@ -32,7 +32,7 @@ stages:
       inputs:
         containerRegistry: |
           dockerHub
-        repository: $(imageName)
+        repository: repository/docker/nemaher/stocks
         command: push
         tags: |
           $(tag)
