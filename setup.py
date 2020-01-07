@@ -10,6 +10,7 @@ setup(
         'alpaca-trade-api',
         'click',
         'pandas',
+        'pyyaml',
         'sklearn',
         'tensorflow',
     ],

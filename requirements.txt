@@ -1,7 +1,9 @@
 alpaca-trade-api
+black
 click
 matplotlib
 pandas
+pyyaml
 seaborn
 sklearn
 tensorflow

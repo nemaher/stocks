@@ -1,17 +1,22 @@
 from configparser import ConfigParser
+import os
+from pathlib import Path
 
 import alpaca_trade_api as tradeapi
 import click
+import yaml
+
 import stocks.stocks as stocks
 
+
 @click.group(help=__doc__)
-@click.option("--config", required=True)
+@click.option("--config", default='config/config.yml')
 @click.pass_context
 def cli(ctx, config):
-    config_reader = ConfigParser()
-    config_reader.read(config)
-    key_id = config_reader.get("alpaca", "key_id")
-    secret_key = config_reader.get("alpaca", "secret_key")
+    with open(config) as f:
+        var_config = yaml.safe_load(f)
+    key_id = var_config['key_id']
+    secret_key = var_config['secret_key']
     ctx.obj = tradeapi.REST(key_id, secret_key)
 
 
