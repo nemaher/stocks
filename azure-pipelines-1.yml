@@ -16,7 +16,7 @@ stages:
       vmImage: 'ubuntu-latest'
     steps:
     - script: |
-        docker login --username nemaher --password-stdin $(pwd)
+        docker login --username nemaher --password $(pwd)
         docker pull docker.io/nemaher/stocks
         mkdir ~/config
         touch ~/config/config.yml
