@@ -6,17 +6,21 @@
 #   branches:
 #     include:
 #     - master
-
-pool:
-  vmImage: 'ubuntu-latest'
-
-steps:
-- script: |
-    docker login --username nemaher --password-stdin $(pwd)
-    docker pull docker.io/nemaher/stocks
-    mkdir ~/config
-    touch ~/config/config.yml
-    echo key_id = $(alpaca_key_id) >> ~/Documents/config.yml
-    echo secret_key = $(alpaca_secret_key) >> ~/Documents/config.yml
-    docker run -it -v ~/config:config nemaher/stocks trade-stocks --symbol $(symbol)
-  displayName: 'Run Docker Image'
+stages:
+- stage: RUN
+  displayName: Run image
+  jobs:  
+  - job: Run
+    displayName: Run
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - script: |
+        docker login --username nemaher --password-stdin $(pwd)
+        docker pull docker.io/nemaher/stocks
+        mkdir ~/config
+        touch ~/config/config.yml
+        echo key_id = $(alpaca_key_id) >> ~/Documents/config.yml
+        echo secret_key = $(alpaca_secret_key) >> ~/Documents/config.yml
+        docker run -it -v ~/config:config nemaher/stocks trade-stocks --symbol $(symbol)
+      displayName: 'Run Docker Image'
