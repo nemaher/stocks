@@ -12,11 +12,11 @@ pool:
 
 steps:
 - script: |
-    pwd
-    docker login --username nemaher --password $(pwd)
+    docker login --username nemaher --password-stdin $(pwd)
     docker pull docker.io/nemaher/stocks
-    touch ~/Documents/config.yml
+    mkdir ~/config
+    touch ~/config/config.yml
     echo key_id = $(alpaca_key_id) >> ~/Documents/config.yml
     echo secret_key = $(alpaca_secret_key) >> ~/Documents/config.yml
-    docker run -it -v ~/Documents:config nemaher/stocks trade-stocks --symbol $(symbol)
+    docker run -it -v ~/config:config nemaher/stocks trade-stocks --symbol $(symbol)
   displayName: 'Run Docker Image'
