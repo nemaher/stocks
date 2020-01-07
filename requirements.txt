@@ -1,3 +1,5 @@
+alpaca-trade-api
+click
 matplotlib
 pandas
 seaborn

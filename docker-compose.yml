@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+    python:
+        image: python:3.7
+        volumes:
+            - .:/workspace
+        working_dir: /workspace
+        entrypoint: /bin/bash
+        command: -c 'python setup.py develop && /bin/bash'

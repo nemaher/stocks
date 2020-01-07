@@ -1,7 +1,10 @@
 FROM python:3.7
 
-ADD . /
+WORKDIR /
+COPY . /
+RUN python setup.py develop
 
-RUN pip install -r requirements.txt
+ENTRYPOINT ["stocks"]
+CMD ["--help"]
 
-CMD [ "python", "./stocks.py" ]
+# CMD ["stocks", "--config", "config.cfg", "trade-stocks", "--symbol", "AAPL"]
