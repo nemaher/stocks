@@ -15,7 +15,6 @@ import stocks.stocks as stocks
 def cli(ctx, config):
     with open(config) as f:
         var_config = yaml.safe_load(f)
-    print(var_config)
     key_id = var_config['key_id']
     secret_key = var_config['secret_key']
     ctx.obj = tradeapi.REST(key_id, secret_key)
