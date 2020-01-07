@@ -20,7 +20,12 @@ scaler = MinMaxScaler()
 
 
 def get_trade_data(trade_api, ticker_symbol):
-    return trade_api.polygon.historic_agg("day", ticker_symbol, limit=1265).df
+    for i in range(3):
+        try:
+            return trade_api.polygon.historic_agg("day", ticker_symbol, limit=1265).df
+        except Exception:
+            continue
+
 
 
 def format_data(df, days=365):
