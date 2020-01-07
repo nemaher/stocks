@@ -2,7 +2,7 @@
 # https://aka.ms/yaml
 schedules:
 - cron: "0 4 * * *"
-  displayName: Daily midnight run
+  displayName: Daily run
   branches:
     include:
     - master
@@ -14,5 +14,9 @@ steps:
 - script: |
     docker login --username nemaher --password $(pwd)
     docker pull docker.io/nemaher/stocks
-    docker run nemaher/stocks
+    touch ./alpaca_config.cfg
+    echo [alpaca] >> alpaca_config.cfg
+    echo key_id = $(alpaca_key_id) >> alpaca_config.cfg
+    echo secret_key = $(alpaca_secret_key) >> alpaca_config.cfg
+    docker run nemaher/stocks --config ./alpaca_config.cfg trade-stocks --symbol $(symbol)
   displayName: 'Run Docker Image'
