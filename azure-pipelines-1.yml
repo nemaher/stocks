@@ -20,7 +20,7 @@ stages:
         docker pull docker.io/nemaher/stocks
         mkdir ~/config
         touch ~/config/config.yml
-        echo key_id = $(alpaca_key_id) >> ~/Documents/config.yml
-        echo secret_key = $(alpaca_secret_key) >> ~/Documents/config.yml
+        echo key_id = $(alpaca_key_id) >> ~/config/config.yml
+        echo secret_key = $(alpaca_secret_key) >> ~/config/config.yml
         docker run -it -v ~/config:config nemaher/stocks trade-stocks --symbol $(symbol)
       displayName: 'Run Docker Image'
