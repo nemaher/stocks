@@ -6,6 +6,8 @@ schedules:
   branches:
     include:
     - master
+    exclude:
+    - releases/*
 
 stages:
 - stage: RUN
