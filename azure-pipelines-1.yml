@@ -1,11 +1,12 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
-# schedules:
-# - cron: "0 4 * * *"
-#   displayName: Daily run
-#   branches:
-#     include:
-#     - master
+schedules:
+- cron: "0,15,30,45 * * * 1-5"
+  displayName: Daily run
+  branches:
+    include:
+    - master
+
 stages:
 - stage: RUN
   displayName: Run image
