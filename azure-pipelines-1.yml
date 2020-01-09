@@ -1,7 +1,7 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 schedules:
-- cron: '*/5 14-21 * * 1-5'
+- cron: '*/10 14-21 * * 1-5'
   displayName: Daily run
   branches:
     include:
@@ -27,6 +27,7 @@ stages:
         echo key_id: $(alpaca_key_id) >> ~/config/config.yml
         echo secret_key: $(alpaca_secret_key) >> ~/config/config.yml
         docker run -v ~/config:/config nemaher/stocks trade-stocks --symbol $(symbol)
+        echo $(System.DefaultWorkingDirectory)/$(symbol)_model.m5
       displayName: 'Run Docker Image'
     - publish: $(System.DefaultWorkingDirectory)/$(symbol)_model.m5
       artifact: $(symbol)_model.m5
