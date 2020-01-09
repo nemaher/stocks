@@ -23,7 +23,8 @@ def cli(ctx, config):
 @cli.command()
 @click.pass_obj
 @click.option("--symbol", required=True, type=str)
-def trade_stocks(trade_api, symbol):
+@click.option("--save-path", default="model.h5", type=str)
+def trade_stocks(trade_api, symbol, save_path):
 
     data_df = stocks.get_trade_data(trade_api, symbol)
 
@@ -33,7 +34,7 @@ def trade_stocks(trade_api, symbol):
 
     model = stocks.train_model(formatted_df, X_train, X_test, y_train, y_test)
     
-    model.save(f'/home/vsts/work/1/a/{symbol}_model.h5')
+    model.save(save_path)
 
     error = stocks.analyze(formatted_df, model, X_test, y_test)
 
