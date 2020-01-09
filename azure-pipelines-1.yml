@@ -27,7 +27,6 @@ stages:
         echo key_id: $(alpaca_key_id) >> ~/config/config.yml
         echo secret_key: $(alpaca_secret_key) >> ~/config/config.yml
         docker run -v ~/config:/config nemaher/stocks trade-stocks --symbol $(symbol)
-        echo $(System.DefaultWorkingDirectory)/$(symbol)_model.m5
       displayName: 'Run Docker Image'
-    - publish: $(System.DefaultWorkingDirectory)/$(symbol)_model.m5
+    - publish: /tmp/$(symbol)_model.m5
       artifact: $(symbol)_model.m5
