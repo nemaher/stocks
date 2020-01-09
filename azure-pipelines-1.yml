@@ -1,11 +1,12 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 schedules:
-- cron: "0,10,20,30,40,50 * * * 1-5"
+- cron: '0,10,20,30,40,50 * * * 1-5'
   displayName: Daily run
   branches:
     include:
     - master
+  always: True
 
 trigger: none 
 
