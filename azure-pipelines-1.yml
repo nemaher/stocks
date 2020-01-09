@@ -29,5 +29,5 @@ stages:
         docker run -v ~/config:/config nemaher/stocks trade-stocks --symbol $(symbol)
         ls /tmp
       displayName: 'Run Docker Image'
-    - publish: /tmp/$(symbol)_model.m5
+    - publish: $(System.DefaultWorkingDirectory)/tmp/$(symbol)_model.m5
       artifact: $(symbol)_model.m5
