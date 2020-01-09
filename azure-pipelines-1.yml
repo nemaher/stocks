@@ -19,7 +19,17 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
+    - task: DownloadBuildArtifacts@0
+      inputs:
+        buildType: 'specific'
+        project: '52448eba-e4d0-40b7-949c-c0e84daf42d4'
+        pipeline: '2'
+        buildVersionToDownload: 'latest'
+        downloadType: 'specific'
+        itemPattern: '*$(symbol)_model.h5*'
+        downloadPath: '$(System.ArtifactsDirectory)'
     - script: |
+        cat $(System.ArtifactsDirectory)/$(symbol)_model.h5
         docker login --username nemaher --password $(pwd)
         docker pull docker.io/nemaher/stocks
         mkdir ~/config
@@ -35,3 +45,4 @@ stages:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
         ArtifactName: '$(symbol)_model.h5'
         publishLocation: 'Container'
+
