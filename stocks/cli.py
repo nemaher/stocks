@@ -33,7 +33,7 @@ def trade_stocks(trade_api, symbol):
 
     model = stocks.train_model(formatted_df, X_train, X_test, y_train, y_test)
     
-    model.save(f'/home/{symbol}_model.h5')
+    model.save(f'/home/vsts/work/1/a/{symbol}_model.h5')
 
     error = stocks.analyze(formatted_df, model, X_test, y_test)
 
