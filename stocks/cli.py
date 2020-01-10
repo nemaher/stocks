@@ -34,12 +34,13 @@ def trade_stocks(trade_api, symbol):
 
     model = stocks.train_model(formatted_df, X_train, X_test, y_train, y_test)
 
-    model.save(f'./{symbol}_model.h5')
+    model.save(f'{symbol}_model.h5')
+    print(os.path.abspath(f'{symbol}_model.h5'))
 
     error = stocks.analyze(formatted_df, model, X_test, y_test)
 
     dict_file = {'error': error, 'data_frame': formatted_df}
-    with open(rf'./{symbol}_model.yml', 'w') as file:
+    with open(rf'{symbol}_model.yml', 'w') as file:
         yaml.dump(dict_file, file)
 
     stocks.traiding_test(formatted_df, model, error)
