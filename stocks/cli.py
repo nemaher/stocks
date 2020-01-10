@@ -40,6 +40,7 @@ def trade_stocks(trade_api, symbol):
     dict_file = {'error': error, 'data_frame': formatted_df}
     with open(rf'{symbol}_model.yml', 'w') as file:
         yaml.dump(dict_file, file)
+
     model.save(f'{symbol}_model.h5')
 
     stocks.traiding_test(formatted_df, model, error)
