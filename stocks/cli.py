@@ -40,7 +40,7 @@ def trade_stocks(trade_api, symbol, save_path):
     error = stocks.analyze(formatted_df, model, X_test, y_test)
 
     dict_file = {'error': error, 'data_frame': formatted_df}
-    with open(rf'{save_path}/{symbol}_info.yml', 'w') as file:
+    with open(rf'{symbol}_model.yml', 'w') as file:
         yaml.dump(dict_file, file)
 
     stocks.traiding_test(formatted_df, model, error)

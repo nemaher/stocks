@@ -41,7 +41,7 @@ stages:
       displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
       inputs:
         SourceFolder: '$(system.defaultworkingdirectory)/stocks'
-        Contents: '*_model.h5'
+        Contents: '*_model*'
         TargetFolder: '$(build.artifactstagingdirectory)'
 
     - task: PublishBuildArtifacts@1
