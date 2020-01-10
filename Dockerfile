@@ -5,4 +5,3 @@ COPY . /
 RUN python setup.py develop
 
 ENTRYPOINT ["stocks"]
-CMD ["--help"]

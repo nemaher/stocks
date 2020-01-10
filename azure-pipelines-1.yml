@@ -29,16 +29,15 @@ stages:
         itemPattern: '*$(symbol)_model.h5*'
         downloadPath: '$(System.ArtifactsDirectory)'
     - script: |
-        cat $(System.ArtifactsDirectory)/$(symbol)_model.h5
+        tail $(System.ArtifactsDirectory)/$(symbol)_model.h5
         docker login --username nemaher --password $(pwd)
         docker pull docker.io/nemaher/stocks
         mkdir ~/config
         touch ~/config/config.yml
         echo key_id: $(alpaca_key_id) >> ~/config/config.yml
         echo secret_key: $(alpaca_secret_key) >> ~/config/config.yml
-        touch $(Build.ArtifactStagingDirectory)/$(symbol)_model.h5
+        mkdir $(Build.ArtifactStagingDirectory)
         docker run -v ~/config:/config nemaher/stocks trade-stocks --symbol $(symbol) --save-path '$(Build.ArtifactStagingDirectory)/$(symbol)_model.h5'
-        echo '$(Build.ArtifactStagingDirectory)/$(symbol)_model.h5'
         ls $(Build.ArtifactStagingDirectory)
     - task: PublishBuildArtifacts@1
       inputs:
