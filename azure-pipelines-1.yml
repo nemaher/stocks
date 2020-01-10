@@ -40,6 +40,7 @@ stages:
         echo '--------------------'
         ls $(system.defaultworkingdirectory)
         ls $(Build.SourcesDirectory)
+        ls $(Agent.BuildDirectory)
     - task: CopyFiles@2
       displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
       inputs:
