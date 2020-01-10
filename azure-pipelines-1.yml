@@ -43,7 +43,7 @@ stages:
     - task: CopyFiles@2
       displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
       inputs:
-        SourceFolder: '$(system.defaultworkingdirectory)/stocks'
+        SourceFolder: '/'
         Contents: '*_model*'
         TargetFolder: '$(build.artifactstagingdirectory)'
 
