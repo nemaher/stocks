@@ -36,7 +36,7 @@ def format_data(df, days=365):
     df["day"] = pd.to_datetime(df["day"])
     df["Year"] = df["day"].apply(lambda date: date.year)
 
-    #  Create a new data frame with historical data
+    #  Create a new data frame with historicafl data
     new_df = []
     print("\nProcessing data rows.")
     for index, row in df.iterrows():

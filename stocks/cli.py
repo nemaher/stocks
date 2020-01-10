@@ -4,6 +4,7 @@ from pathlib import Path
 
 import alpaca_trade_api as tradeapi
 import click
+from tensorflow.keras.models import load_model
 import yaml
 
 import stocks.stocks as stocks
@@ -38,6 +39,22 @@ def trade_stocks(trade_api, symbol, save_path):
 
     error = stocks.analyze(formatted_df, model, X_test, y_test)
 
+    dict_file = {'error': error, 'data_frame': formatted_df}
+    with open(rf'{save_path}/{symbol}_info.yml', 'w') as file:
+        yaml.dump(dict_file, file)
+
     stocks.traiding_test(formatted_df, model, error)
 
 
+@cli.command()
+@click.pass_obj
+@click.option("--symbol", required=True, type=str)
+@click.option("--upload-path", default="model.h5", type=str)
+def buy_stocks_test(trade_api, symbol, upload_path):
+    with open(f'{upload_path}/{symbol}_info.yml') as f:
+        df_config = yaml.safe_load(f)
+    formatted_df = df_config['data_frame']
+    error = df_config['error']
+
+    model = load_model(f'{upload_path}/{symbol}_model.h5')
+    stocks.traiding_test(formatted_df, model, error)
