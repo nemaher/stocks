@@ -32,7 +32,7 @@ stages:
         tail $(System.ArtifactsDirectory)/$(symbol)_model.h5
         docker login --username nemaher --password $(pwd)
         docker pull docker.io/nemaher/stocks
-        mkdir $(system.defaultworkingdirectory)/$(symbol)
+        mkdir $(system.defaultworkingdirectory)/stocks/$(symbol)
         mkdir ~/config
         touch ~/config/config.yml
         echo key_id: $(alpaca_key_id) >> ~/config/config.yml
@@ -44,7 +44,7 @@ stages:
     - task: CopyFiles@2
       displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
       inputs:
-        SourceFolder: '$(system.defaultworkingdirectory)'
+        SourceFolder: '$(system.defaultworkingdirectory)/stocks'
         Contents: '$(symbol)/*'
         TargetFolder: '$(build.artifactstagingdirectory)'
 
