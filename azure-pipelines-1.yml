@@ -36,14 +36,13 @@ stages:
         touch ~/config/config.yml
         echo key_id: $(alpaca_key_id) >> ~/config/config.yml
         echo secret_key: $(alpaca_secret_key) >> ~/config/config.yml
-        mkdir $(Build.ArtifactStagingDirectory)/$(symbol)
         docker run -v ~/config:/config nemaher/stocks trade-stocks --symbol $(symbol) --save-path '$(Build.ArtifactStagingDirectory)/$(symbol)'
     - task: CopyFiles@2
       displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
       inputs:
         SourceFolder: '$(system.defaultworkingdirectory)/stocks'
-        Contents: '$(symbol)_model.h5'
-        TargetFolder: '$(build.artifactstagingdirectory)/$(symbol)'
+        Contents: '*_model.h5'
+        TargetFolder: '$(build.artifactstagingdirectory)'
 
     - task: PublishBuildArtifacts@1
       inputs:
