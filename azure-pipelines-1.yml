@@ -36,8 +36,8 @@ stages:
         touch ~/config/config.yml
         echo key_id: $(alpaca_key_id) >> ~/config/config.yml
         echo secret_key: $(alpaca_secret_key) >> ~/config/config.yml
-        mkdir $(Build.ArtifactStagingDirectory)
-        docker run -v ~/config:/config nemaher/stocks trade-stocks --symbol $(symbol) --save-path '$(Build.ArtifactStagingDirectory)/$(symbol)_model.h5'
+        mkdir $(Build.ArtifactStagingDirectory)/artifacts
+        docker run -v ~/config:/config nemaher/stocks trade-stocks --symbol $(symbol) --save-path '$(Build.ArtifactStagingDirectory)/artifacts'
         ls $(Build.ArtifactStagingDirectory)
     - task: PublishBuildArtifacts@1
       inputs:

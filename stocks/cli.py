@@ -34,8 +34,10 @@ def trade_stocks(trade_api, symbol, save_path):
 
     model = stocks.train_model(formatted_df, X_train, X_test, y_train, y_test)
     
-    model.save(save_path)
+    model.save(f'{save_path}/{symbol}_model.h5')
 
     error = stocks.analyze(formatted_df, model, X_test, y_test)
 
     stocks.traiding_test(formatted_df, model, error)
+
+
