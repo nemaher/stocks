@@ -37,7 +37,6 @@ stages:
         echo key_id: $(alpaca_key_id) >> ~/config/config.yml
         echo secret_key: $(alpaca_secret_key) >> ~/config/config.yml
         docker run -v ~/config:/config nemaher/stocks trade-stocks --symbol $(symbol)
-        cd ../
         find $(build.artifactstagingdirectory) -name "*.h5"
         echo '--------------------'
         ls $(system.defaultworkingdirectory)/stocks
@@ -45,7 +44,7 @@ stages:
       displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
       inputs:
         SourceFolder: '$(system.defaultworkingdirectory)'
-        Contents: '*_model*'
+        Contents: '$(symbol)/*'
         TargetFolder: '$(build.artifactstagingdirectory)'
 
     - task: PublishBuildArtifacts@1
