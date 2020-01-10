@@ -32,7 +32,7 @@ stages:
         tail $(System.ArtifactsDirectory)/$(symbol)_model.h5
         docker login --username nemaher --password $(pwd)
         docker pull docker.io/nemaher/stocks
-        mkdir ~/$(symbol)
+        mkdir $(system.defaultworkingdirectory)/$(symbol)
         mkdir ~/config
         touch ~/config/config.yml
         echo key_id: $(alpaca_key_id) >> ~/config/config.yml
