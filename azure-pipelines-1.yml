@@ -32,19 +32,17 @@ stages:
         tail $(System.ArtifactsDirectory)/$(symbol)_model.h5
         docker login --username nemaher --password $(pwd)
         docker pull docker.io/nemaher/stocks
-        mkdir $(system.defaultworkingdirectory)/stocks/$(symbol)
+        mkdir ~/model
         mkdir ~/config
         touch ~/config/config.yml
         echo key_id: $(alpaca_key_id) >> ~/config/config.yml
         echo secret_key: $(alpaca_secret_key) >> ~/config/config.yml
         docker run -v ~/config:/config nemaher/stocks trade-stocks --symbol $(symbol)
-        find $(build.artifactstagingdirectory) -name "*.h5"
         echo '--------------------'
         ls $(system.defaultworkingdirectory)/stocks
     - task: CopyFiles@2
       displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
       inputs:
-        SourceFolder: '$(system.defaultworkingdirectory)/stocks'
         Contents: '$(symbol)/*'
         TargetFolder: '$(build.artifactstagingdirectory)'
 
