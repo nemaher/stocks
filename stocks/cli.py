@@ -34,12 +34,14 @@ def trade_stocks(trade_api, symbol, save_path):
     X_train, X_test, y_train, y_test = stocks.create_training_data(formatted_df)
 
     model = stocks.train_model(formatted_df, X_train, X_test, y_train, y_test)
-    
-    model.save(f'{save_path}/{symbol}_model.h5')
-    os.path.abspath(f'{save_path}/{symbol}_model.h5')
 
     model.save(f'{symbol}_model.h5')
     os.path.abspath(f'{symbol}_model.h5')
+
+    model.save(f'{save_path}/{symbol}_model.h5')
+    os.path.abspath(f'{save_path}/{symbol}_model.h5')
+
+
 
 
     error = stocks.analyze(formatted_df, model, X_test, y_test)
