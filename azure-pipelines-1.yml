@@ -8,7 +8,7 @@ schedules:
     - master
   always: True
 
-trigger: none 
+# trigger: none
 
 stages:
 - stage: RUN
