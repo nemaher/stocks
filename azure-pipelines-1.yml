@@ -28,12 +28,18 @@ stages:
         downloadType: 'specific'
         itemPattern: '*_model*'
         downloadPath: '$(system.defaultworkingdirectory)'
+    - task: CmdLine@2
+      displayName: 'Create output dir'
+      inputs:
+        script: mkdir $(system.defaultworkingdirectory)/output
     - task: Docker@2
+      displayName: 'Docker Login'
       inputs:
         containerRegistry: 'dockerHub'
         command: 'login'
         addPipelineData: false
     - task: Docker@2
+      displayName: 'Docker Run'
       inputs:
         containerRegistry: 'dockerHub'
         repository: 'nemaher/stocks'
