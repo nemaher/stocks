@@ -193,6 +193,3 @@ def traiding_test(df, model, error=0, money=500):
     print(f"{amount_of_stock} shares of stock")
     total_assets = round(amount_of_stock * yesterdays_price + money, 2)
     print(f"Total asset value is ${total_assets}")
-    import os
-    print(os.path.abspath(f'AAPL_model.h5'))
-    print(os.path.abspath(f'AAPL_model.yml'))
