@@ -28,7 +28,7 @@ def get_trade_data(trade_api, ticker_symbol):
 
 
 
-def format_data(df, days=365):
+def format_data(df, days=100):
     #  days = Set how many days back to get the data for
 
     #  replace day with just the year
@@ -163,7 +163,7 @@ def analyze(df, model, X_test, y_test):
 def traiding_test(df, model, error=0, money=500):
     amount_of_stock = 0
 
-    for x in reversed(range(900)):
+    for x in reversed(range(50)): # 900
         # progbar(x, 900, 20)
         if x == 0:
             continue
