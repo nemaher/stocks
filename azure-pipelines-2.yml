@@ -1,0 +1,21 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger: none
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - task: DownloadBuildArtifacts@0
+    inputs:
+      buildType: 'specific'
+      project: '52448eba-e4d0-40b7-949c-c0e84daf42d4'
+      pipeline: '2'
+      buildVersionToDownload: 'latest'
+      downloadType: 'specific'
+      downloadPath: '$(system.defaultworkingdirectory)'
+
+  - script: ls $(system.defaultworkingdirectory)
