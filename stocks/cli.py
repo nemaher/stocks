@@ -11,13 +11,12 @@ import stocks.stocks as stocks
 
 
 @click.group(help=__doc__)
-@click.option("--config", default='config/config.yml')
 @click.pass_context
-def cli(ctx, config):
-    with open(config) as f:
-        var_config = yaml.safe_load(f)
-    key_id = var_config['key_id']
-    secret_key = var_config['secret_key']
+def cli(ctx):
+    # with open(config) as f:
+    #     var_config = yaml.safe_load(f)
+    key_id = os.environ['key_id']
+    secret_key = os.environ['secret_key']
     ctx.obj = tradeapi.REST(key_id, secret_key)
 
 

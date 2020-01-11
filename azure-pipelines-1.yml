@@ -28,19 +28,24 @@ stages:
         downloadType: 'specific'
         itemPattern: '*_model*'
         downloadPath: '$(system.defaultworkingdirectory)'
-    - script: |
-        docker login --username nemaher --password $(pwd)
-        docker pull docker.io/nemaher/stocks
-        mkdir $(system.defaultworkingdirectory)/config
-        mkdir $(system.defaultworkingdirectory)/output
-        touch $(system.defaultworkingdirectory)/config/config.yml
-        echo key_id: $(alpaca_key_id) >> $(system.defaultworkingdirectory)/config/config.yml
-        echo secret_key: $(alpaca_secret_key) >> $(system.defaultworkingdirectory)/config/config.yml
-        docker run -v $(system.defaultworkingdirectory)/config:/config -v $(system.defaultworkingdirectory)/output:/output nemaher/stocks trade-stocks --symbol $(symbol) --save-path /output
-        ls $(system.defaultworkingdirectory)
-        ls $(system.defaultworkingdirectory)/config
-        ls $(system.defaultworkingdirectory)/output
-        ls $(system.defaultworkingdirectory)/stocks
+    - task: CmdLine@2
+      displayName: 'Create output dir'
+      inputs:
+        script: mkdir $(system.defaultworkingdirectory)/output
+    - task: Docker@2
+      displayName: 'Docker Login'
+      inputs:
+        containerRegistry: 'dockerHub'
+        command: 'login'
+        addPipelineData: false
+    - task: Docker@2
+      displayName: 'Docker Run'
+      inputs:
+        containerRegistry: 'dockerHub'
+        repository: 'nemaher/stocks'
+        command: 'run'
+        arguments: '-e key_id=$(alpaca_key_id) -e secret_key=$(alpaca_secret_key) -v $(system.defaultworkingdirectory)/config:/config -v $(system.defaultworkingdirectory)/output:/output nemaher/stocks trade-stocks --symbol $(symbol) --save-path /output'
+        addPipelineData: false
     - task: CopyFiles@2
       displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
       inputs:
