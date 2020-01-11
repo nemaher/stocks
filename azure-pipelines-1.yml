@@ -31,12 +31,12 @@ stages:
     - script: |
         docker login --username nemaher --password $(pwd)
         docker pull docker.io/nemaher/stocks
-        mkdir /stocks
         mkdir ~/config
+        mkdir ~/output
         touch ~/config/config.yml
         echo key_id: $(alpaca_key_id) >> ~/config/config.yml
         echo secret_key: $(alpaca_secret_key) >> ~/config/config.yml
-        docker run -v ~/config:/config nemaher/stocks trade-stocks --symbol $(symbol) --save-path /stocks
+        docker run -v ~/config:/config -v ~/output:/output nemaher/stocks trade-stocks --symbol $(symbol) --save-path /output
         ls $(system.defaultworkingdirectory)
         ls $(system.defaultworkingdirectory)/stocks
     - task: CopyFiles@2
