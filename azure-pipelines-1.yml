@@ -28,15 +28,27 @@ stages:
         downloadType: 'specific'
         itemPattern: '*_model*'
         downloadPath: '$(system.defaultworkingdirectory)'
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'dockerHub'
+        command: 'login'
+        addPipelineData: false
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'dockerHub'
+        repository: 'nemaher/stocks'
+        command: 'run'
+        arguments: '-v $(system.defaultworkingdirectory)/config:/config -v $(system.defaultworkingdirectory)/output:/output nemaher/stocks trade-stocks --symbol $(symbol) --save-path /output'
+        addPipelineData: false
     - script: |
         docker login --username nemaher --password $(pwd)
-        docker pull docker.io/nemaher/stocks
+        docker pull docker.io/
         mkdir $(system.defaultworkingdirectory)/config
         mkdir $(system.defaultworkingdirectory)/output
         touch $(system.defaultworkingdirectory)/config/config.yml
         echo key_id: $(alpaca_key_id) >> $(system.defaultworkingdirectory)/config/config.yml
         echo secret_key: $(alpaca_secret_key) >> $(system.defaultworkingdirectory)/config/config.yml
-        docker run -v $(system.defaultworkingdirectory)/config:/config -v $(system.defaultworkingdirectory)/output:/output nemaher/stocks trade-stocks --symbol $(symbol) --save-path /output
+        docker run 
         ls $(system.defaultworkingdirectory)
         ls $(system.defaultworkingdirectory)/config
         ls $(system.defaultworkingdirectory)/output
