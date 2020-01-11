@@ -33,9 +33,9 @@ stages:
         docker pull docker.io/nemaher/stocks
         mkdir $(system.defaultworkingdirectory)/config
         mkdir $(system.defaultworkingdirectory)/output
-        touch ~/config/config.yml
-        echo key_id: $(alpaca_key_id) >> ~/config/config.yml
-        echo secret_key: $(alpaca_secret_key) >> ~/config/config.yml
+        touch $(system.defaultworkingdirectory)/config/config.yml
+        echo key_id: $(alpaca_key_id) >> $(system.defaultworkingdirectory)/config/config.yml
+        echo secret_key: $(alpaca_secret_key) >> $(system.defaultworkingdirectory)/config/config.yml
         docker run -v $(system.defaultworkingdirectory)/config:/config -v $(system.defaultworkingdirectory)/output:/output nemaher/stocks trade-stocks --symbol $(symbol) --save-path /output
         ls $(system.defaultworkingdirectory)
         ls $(system.defaultworkingdirectory)/config
