@@ -46,19 +46,6 @@ stages:
         command: 'run'
         arguments: '-e key_id=$(alpaca_key_id) -e secret_key=$(alpaca_secret_key) -v $(system.defaultworkingdirectory)/config:/config -v $(system.defaultworkingdirectory)/output:/output nemaher/stocks trade-stocks --symbol $(symbol) --save-path /output'
         addPipelineData: false
-#    - script: |
-#        docker login --username nemaher --password $(pwd)
-#        docker pull docker.io/
-#        mkdir $(system.defaultworkingdirectory)/config
-#        mkdir $(system.defaultworkingdirectory)/output
-#        touch $(system.defaultworkingdirectory)/config/config.yml
-#        echo key_id: $(alpaca_key_id) >> $(system.defaultworkingdirectory)/config/config.yml
-#        echo secret_key: $(alpaca_secret_key) >> $(system.defaultworkingdirectory)/config/config.yml
-#        docker run
-#        ls $(system.defaultworkingdirectory)
-#        ls $(system.defaultworkingdirectory)/config
-#        ls $(system.defaultworkingdirectory)/output
-#        ls $(system.defaultworkingdirectory)/stocks
     - task: CopyFiles@2
       displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
       inputs:
