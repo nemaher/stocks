@@ -3,6 +3,14 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
+schedules:
+- cron: '*/10 14-21 * * 1-5'
+  displayName: Daily run
+  branches:
+    include:
+    - master
+  always: True
+
 trigger: none
 
 pool:
@@ -16,6 +24,6 @@ steps:
       pipeline: '2'
       buildVersionToDownload: 'latest'
       downloadType: 'specific'
-      downloadPath: '$(system.defaultworkingdirectory)'
+      downloadPath: '$(system.defaultworkingdirectory)/artifacts'
 
-  - script: ls $(system.defaultworkingdirectory)/AAPL
+  - script: ls $(system.defaultworkingdirectory)/artifacts

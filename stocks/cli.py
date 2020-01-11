@@ -34,12 +34,12 @@ def trade_stocks(trade_api, symbol, save_path):
 
     model = stocks.train_model(formatted_df, X_train, X_test, y_train, y_test)
 
-
     error = stocks.analyze(formatted_df, model, X_test, y_test)
 
-    dict_file = {'error': error, 'data_frame': formatted_df}
+    dict_file = {'error': int(error)}
     with open(rf'{save_path}/{symbol}_model.yml', 'w') as file:
         yaml.dump(dict_file, file)
+    formatted_df.to_pickle(f'{save_path}/{symbol}_model.pkl')
     model.save(f'{save_path}/{symbol}_model.h5')
 
     stocks.traiding_test(formatted_df, model, error)
