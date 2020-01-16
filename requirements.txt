@@ -3,8 +3,8 @@ black
 click
 matplotlib
 pandas
+pickle
 pyyaml
 seaborn
 sklearn
 tensorflow
-
