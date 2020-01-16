@@ -55,7 +55,7 @@ def buy_stocks_test(trade_api, symbol, upload_path):
         df_config = yaml.safe_load(f)
 
     error = df_config.get('error')
-    formatted_df = pickle.load(open(f'{upload_path}/{symbol}_model.yml', "rb"))
+    formatted_df = pickle.load(open(f'{upload_path}/{symbol}_model.pkl', "rb"))
     model = load_model(f'{upload_path}/{symbol}_model.h5')
 
     stocks.traiding_test(formatted_df, model, error)
