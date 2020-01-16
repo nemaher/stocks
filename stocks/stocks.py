@@ -1,8 +1,6 @@
 import pandas as pd
 import numpy as np
 
-# import matplotlib.pyplot as plt
-# import seaborn as sns
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import (
     mean_squared_error,
@@ -13,7 +11,6 @@ from sklearn.model_selection import train_test_split
 
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Activation, Dropout
-from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.callbacks import EarlyStopping
 
 scaler = MinMaxScaler()
@@ -27,8 +24,7 @@ def get_trade_data(trade_api, ticker_symbol):
             continue
 
 
-
-def format_data(df, days=10):
+def format_data(df, days=365):
     #  days = Set how many days back to get the data for
 
     #  replace day with just the year
@@ -109,10 +105,6 @@ def train_model(df, X_train, X_test, y_train, y_test):
     return model
 
 
-# model_loss = pd.DataFrame(model.history.history)
-# model_loss.plot()
-
-
 def analyze(df, model, X_test, y_test):
     predictions = model.predict(X_test)
     error = round(mean_absolute_error(y_test, predictions), 2)
@@ -124,14 +116,7 @@ def analyze(df, model, X_test, y_test):
     percent_off = error / mean
     print(f"Percent off from mean {round(percent_off*100, 2)}%")
 
-    # # Our predictions
-    # plt.scatter(y_test,predictions)
-    #
-    # # Perfect predictions
-    # plt.plot(y_test,y_test,'r')
-
     day_location = df.shape[0] - 1
-    # day_location = 2000
     single_day = df.drop("close", axis=1).iloc[day_location]
     single_day = scaler.transform(single_day.values.reshape(-1, len(df.columns) - 1))
 
@@ -163,8 +148,7 @@ def analyze(df, model, X_test, y_test):
 def traiding_test(df, model, error=0, money=500):
     amount_of_stock = 0
 
-    for x in reversed(range(5)): # 900
-        # progbar(x, 900, 20)
+    for x in reversed(range(900)):
         if x == 0:
             continue
         day_location = df.shape[0] - x
@@ -177,15 +161,11 @@ def traiding_test(df, model, error=0, money=500):
         yesterdays_price = round(df.iloc[day_location - 1]["close"], 2)
 
         if pridected_price + error > yesterdays_price:
-            # print(f"pridected price {pridected_price + error} \n yesterday price {yesterdays_price}")
             while money > yesterdays_price:
-                # print(f"Buy {x} days ago")
                 money = money - yesterdays_price
                 amount_of_stock = amount_of_stock + 1
         else:
-            # print(f"day ago {x} amount of stock {amount_of_stock}")
             while amount_of_stock > 0:
-                # print(f"Sell {x} days ago")
                 money = money + yesterdays_price
                 amount_of_stock = amount_of_stock - 1
 
