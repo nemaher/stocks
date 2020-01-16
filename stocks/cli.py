@@ -4,6 +4,7 @@ from pathlib import Path
 
 import alpaca_trade_api as tradeapi
 import click
+import pickle
 from tensorflow.keras.models import load_model
 import yaml
 
@@ -50,10 +51,11 @@ def trade_stocks(trade_api, symbol, save_path):
 @click.option("--symbol", required=True, type=str)
 @click.option("--upload-path", default="model.h5", type=str)
 def buy_stocks_test(trade_api, symbol, upload_path):
-    with open(f'{upload_path}/{symbol}_info.yml') as f:
+    with open(f'{upload_path}/{symbol}_model.yml') as f:
         df_config = yaml.safe_load(f)
-    formatted_df = df_config['data_frame']
-    error = df_config['error']
 
+    error = df_config.get('error')
+    formatted_df = pickle.load(open(f'{upload_path}/{symbol}_model.yml', "rb"))
     model = load_model(f'{upload_path}/{symbol}_model.h5')
+
     stocks.traiding_test(formatted_df, model, error)
