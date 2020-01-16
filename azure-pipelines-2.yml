@@ -25,5 +25,24 @@ steps:
       buildVersionToDownload: 'latest'
       downloadType: 'specific'
       downloadPath: '$(system.defaultworkingdirectory)/artifacts'
+  - task: CmdLine@2
+    displayName: 'Create output dir'
+    inputs:
+      script: mkdir $(system.defaultworkingdirectory)/output
+  - task: Docker@2
+    displayName: 'Docker Login'
+    inputs:
+      containerRegistry: 'dockerHub'
+      command: 'login'
+      addPipelineData: false
+  - task: Docker@2
+    displayName: 'Docker Run'
+    inputs:
+      containerRegistry: 'dockerHub'
+      repository: 'nemaher/stocks'
+      command: 'run'
+      arguments: '-e key_id=$(alpaca_key_id) -e secret_key=$(alpaca_secret_key) nemaher/stocks buy_stocks_test --symbol $(symbol) --upload-path $(system.defaultworkingdirectory)/artifacts/$(symbol)'
+      addPipelineData: false
 
   - script: ls $(system.defaultworkingdirectory)/artifacts
+
