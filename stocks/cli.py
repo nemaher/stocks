@@ -45,7 +45,7 @@ def trade_stocks(trade_api, symbol, save_path):
     with open(rf'{save_path}/{symbol}_model.yml', 'w') as file:
         yaml.dump(dict_file, file)
         
-    scaler.to_pickle(f'{save_path}/{symbol}_scaler.pkl')
+    pickle.dump(scaler, open(f'{save_path}/{symbol}_scaler.pkl', 'wb'))
     
     stocks.traiding_test(formatted_df, model, error)
 
