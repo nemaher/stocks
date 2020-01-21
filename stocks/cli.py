@@ -31,18 +31,22 @@ def trade_stocks(trade_api, symbol, save_path):
 
     formatted_df = stocks.format_data(data_df)
 
-    X_train, X_test, y_train, y_test = stocks.create_training_data(formatted_df)
+    X_train, X_test, y_train, y_test, scaler = stocks.create_training_data(formatted_df)
 
     model = stocks.train_model(formatted_df, X_train, X_test, y_train, y_test)
 
     error = stocks.analyze(formatted_df, model, X_test, y_test)
 
+    formatted_df.to_pickle(f'{save_path}/{symbol}_model.pkl')
+    
+    model.save(f'{save_path}/{symbol}_model.h5')
+    
     dict_file = {'error': int(error)}
     with open(rf'{save_path}/{symbol}_model.yml', 'w') as file:
         yaml.dump(dict_file, file)
-    formatted_df.to_pickle(f'{save_path}/{symbol}_model.pkl')
-    model.save(f'{save_path}/{symbol}_model.h5')
-
+        
+    scaler.to_pickle(f'{save_path}/{symbol}_scaler.pkl')
+    
     stocks.traiding_test(formatted_df, model, error)
 
 
@@ -54,8 +58,9 @@ def buy_stocks_test(trade_api, symbol, upload_path):
     with open(f'{upload_path}/{symbol}_model.yml') as f:
         df_config = yaml.safe_load(f)
 
-    error = df_config.get('error')
     formatted_df = pickle.load(open(f'{upload_path}/{symbol}_model.pkl', "rb"))
     model = load_model(f'{upload_path}/{symbol}_model.h5')
+    error = df_config.get('error')
+    scaler = pickle.load(open(f'{upload_path}/{symbol}_scaler.pkl', "rb"))
 
-    stocks.traiding_test(formatted_df, model, error)
+    stocks.traiding_test(formatted_df, model, error, scaler)
