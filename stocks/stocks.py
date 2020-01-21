@@ -74,7 +74,7 @@ def create_training_data(df):
     X_train = scaler.fit_transform(X_train)
     X_test = scaler.transform(X_test)
 
-    return X_train, X_test, y_train, y_test
+    return X_train, X_test, y_train, y_test, scaler
 
 
 def train_model(df, X_train, X_test, y_train, y_test):
@@ -145,7 +145,7 @@ def analyze(df, model, X_test, y_test):
     return error
 
 
-def traiding_test(df, model, error=0, money=500):
+def traiding_test(df, model, error=0, scaler=scaler, money=500):
     amount_of_stock = 0
 
     for x in reversed(range(900)):
