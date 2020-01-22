@@ -181,7 +181,7 @@ def trade_stock(trade_api, ticker_symbol, df, model, error=0, scaler=scaler):
     today = scaler.transform(today.values.reshape(-1, len(df.columns) - 1))
 
     pridected_price = round(model.predict(today)[0][0], 2)
-
+    print(trade_api.polygon.historic_agg("day", ticker_symbol, limit=10).df)
     price = trade_api.polygon.snapshot(ticker_symbol).ticker["day"]["c"]
 
     if price != 0:
