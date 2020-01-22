@@ -36,7 +36,6 @@ def format_data(df, days=365):
     new_df = []
     print("\nProcessing data rows.")
     for index, row in df.iterrows():
-        # stocks.progbar(index, df.shape[0], 20)
         # create new row with year and current close data
         new_row = [row["Year"], row["close"]]
         for x in range(days + 1):
@@ -181,7 +180,6 @@ def trade_stock(trade_api, ticker_symbol, df, model, error=0, scaler=scaler):
     today = scaler.transform(today.values.reshape(-1, len(df.columns) - 1))
 
     pridected_price = round(model.predict(today)[0][0], 2)
-    print(trade_api.polygon.historic_agg("day", ticker_symbol, limit=10).df)
     price = trade_api.polygon.snapshot(ticker_symbol).ticker["day"]["c"]
 
     if price != 0:
@@ -199,7 +197,7 @@ def trade_stock(trade_api, ticker_symbol, df, model, error=0, scaler=scaler):
                 except Exception:
                     return
         else:
-            print(f"pridected price {pridected_price + error} less than today price {price}. SEL")
+            print(f"pridected price {round(pridected_price, 2) + error} less than today price {price}. SELL")
             while True:
                 try:
                     trade_api.submit_order(
