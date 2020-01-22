@@ -54,7 +54,7 @@ def trade_stocks(trade_api, symbol, save_path):
 @click.pass_obj
 @click.option("--symbol", required=True, type=str)
 @click.option("--upload-path", default="model.h5", type=str)
-def buy_stocks_test(trade_api, symbol, upload_path):
+def buy_stocks(trade_api, symbol, upload_path):
     with open(f'{upload_path}/{symbol}_model.yml') as f:
         df_config = yaml.safe_load(f)
 
@@ -63,4 +63,4 @@ def buy_stocks_test(trade_api, symbol, upload_path):
     error = df_config.get('error')
     scaler = pickle.load(open(f'{upload_path}/{symbol}_scaler.pkl', "rb"))
 
-    stocks.traiding_test(formatted_df, model, error, scaler)
+    stocks.trade_stock(tradeapi, symbol, formatted_df, model, error, scaler)

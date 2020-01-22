@@ -173,3 +173,40 @@ def traiding_test(df, model, error=0, scaler=scaler, money=500):
     print(f"{amount_of_stock} shares of stock")
     total_assets = round(amount_of_stock * yesterdays_price + money, 2)
     print(f"Total asset value is ${total_assets}")
+
+
+def trade_stock(trade_api, ticker_symbol, df, model, error=0, scaler=scaler):
+    today = df.drop('close', axis=1).iloc[df.shape[0] - 1]
+
+    today = scaler.transform(today.values.reshape(-1, len(df.columns) - 1))
+
+    pridected_price = round(model.predict(today)[0][0], 2)
+
+    price = trade_api.polygon.snapshot(ticker_symbol).ticker["lastQuote"]["P"]
+
+    if pridected_price + error > price:
+        print(f"pridected price {pridected_price + error} greater than today price {price}. BUY")
+        while True:
+            try:
+                trade_api.submit_order(
+                    symbol=ticker_symbol,
+                    qty=1,
+                    side='buy',
+                    type='market',
+                    time_in_force='day'
+                )
+            except Exception:
+                return
+    else:
+        print(f"pridected price {pridected_price + error} less than today price {price}. SEL")
+        while True:
+            try:
+                trade_api.submit_order(
+                    symbol=ticker_symbol,
+                    qty=1,
+                    side='sell',
+                    type='market',
+                    time_in_force='day',
+                )
+            except Exception:
+                return
