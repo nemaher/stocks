@@ -182,31 +182,32 @@ def trade_stock(trade_api, ticker_symbol, df, model, error=0, scaler=scaler):
 
     pridected_price = round(model.predict(today)[0][0], 2)
 
-    price = trade_api.polygon.snapshot(ticker_symbol).ticker["lastQuote"]["P"]
+    price = trade_api.polygon.snapshot(ticker_symbol).ticker["day"]["c"]
 
-    if pridected_price + error > price:
-        print(f"pridected price {pridected_price + error} greater than today price {price}. BUY")
-        while True:
-            try:
-                trade_api.submit_order(
-                    symbol=ticker_symbol,
-                    qty=1,
-                    side='buy',
-                    type='market',
-                    time_in_force='day'
-                )
-            except Exception:
-                return
-    else:
-        print(f"pridected price {pridected_price + error} less than today price {price}. SEL")
-        while True:
-            try:
-                trade_api.submit_order(
-                    symbol=ticker_symbol,
-                    qty=1,
-                    side='sell',
-                    type='market',
-                    time_in_force='day',
-                )
-            except Exception:
-                return
+    if price != 0:
+        if pridected_price + error > price:
+            print(f"pridected price {pridected_price + error} greater than today price {price}. BUY")
+            while True:
+                try:
+                    trade_api.submit_order(
+                        symbol=ticker_symbol,
+                        qty=1,
+                        side='buy',
+                        type='market',
+                        time_in_force='day'
+                    )
+                except Exception:
+                    return
+        else:
+            print(f"pridected price {pridected_price + error} less than today price {price}. SEL")
+            while True:
+                try:
+                    trade_api.submit_order(
+                        symbol=ticker_symbol,
+                        qty=1,
+                        side='sell',
+                        type='market',
+                        time_in_force='day',
+                    )
+                except Exception:
+                    return
