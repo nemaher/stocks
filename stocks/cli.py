@@ -63,4 +63,4 @@ def buy_stocks(trade_api, symbol, upload_path):
     error = df_config.get('error')
     scaler = pickle.load(open(f'{upload_path}/{symbol}_scaler.pkl', "rb"))
 
-    stocks.trade_stock(tradeapi, symbol, formatted_df, model, error, scaler)
+    stocks.trade_stock(trade_api, symbol, formatted_df, model, error, scaler)
