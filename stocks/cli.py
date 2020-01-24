@@ -37,6 +37,16 @@ def trade_stocks(trade_api, symbol, save_path):
 
     error = stocks.analyze(formatted_df, model, X_test, y_test)
     
+    formatted_df.to_pickle(f'{save_path}/{symbol}_model.pkl')
+
+    model.save(f'{save_path}/{symbol}_model.h5')
+
+    dict_file = {'error': int(error)}
+    with open(rf'{save_path}/{symbol}_model.yml', 'w') as file:
+        yaml.dump(dict_file, file)
+
+    pickle.dump(scaler, open(f'{save_path}/{symbol}_scaler.pkl', 'wb'))
+    
     stocks.traiding_test(formatted_df, model, error)
 
 
