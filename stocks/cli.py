@@ -41,7 +41,7 @@ def trade_stocks(trade_api, symbol, save_path):
 
     model.save(f'{save_path}/{symbol}_model.h5')
 
-    dict_file = {'error': error}
+    dict_file = {'error': float(error)}
     with open(rf'{save_path}/{symbol}_model.yml', 'w') as file:
         yaml.dump(dict_file, file)
 
