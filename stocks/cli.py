@@ -24,22 +24,22 @@ def cli(ctx):
 @click.option("--symbol", required=True, type=str)
 @click.option("--save-path", required=True, type=str)
 def trade_stocks(trade_api, symbol, save_path):
+    data_df = stocks.get_trade_data(trade_api, symbol)
+
+    formatted_df = stocks.format_data(data_df)
+
+    X_train, X_test, y_train, y_test, scaler = stocks.create_training_data(formatted_df)
+
     low_error = 10000
-    for _ in range(0,5):
-        data_df = stocks.get_trade_data(trade_api, symbol)
-
-        formatted_df = stocks.format_data(data_df)
-
-        X_train, X_test, y_train, y_test, scaler = stocks.create_training_data(formatted_df)
-
+    for _ in range(0, 5):
         model = stocks.train_model(formatted_df, X_train, X_test, y_train, y_test)
 
         error = stocks.analyze(formatted_df, model, X_test, y_test)
 
-        formatted_df.to_pickle(f'{save_path}/{symbol}_model.pkl')
-
         if abs(error) < low_error:
             low_error = abs(error)
+
+            formatted_df.to_pickle(f'{save_path}/{symbol}_model.pkl')
 
             model.save(f'{save_path}/{symbol}_model.h5')
 
@@ -49,7 +49,7 @@ def trade_stocks(trade_api, symbol, save_path):
 
             pickle.dump(scaler, open(f'{save_path}/{symbol}_scaler.pkl', 'wb'))
 
-            stocks.traiding_test(formatted_df, model, error)
+    stocks.traiding_test(formatted_df, model, error)
 
 
 @cli.command()
