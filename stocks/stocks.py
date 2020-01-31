@@ -185,17 +185,17 @@ def trade_stock(trade_api, ticker_symbol, df, model, error=0, scaler=scaler):
     if price != 0:
         if pridected_price + error > price:
             print(f"pridected price {pridected_price + error} greater than today price {price}. BUY")
-            while True:
-                try:
-                    trade_api.submit_order(
-                        symbol=ticker_symbol,
-                        qty=1,
-                        side='buy',
-                        type='market',
-                        time_in_force='day'
-                    )
-                except Exception:
-                    return
+            # while True:
+            try:
+                trade_api.submit_order(
+                    symbol=ticker_symbol,
+                    qty=1,
+                    side='buy',
+                    type='market',
+                    time_in_force='day'
+                )
+            except Exception:
+                return
         else:
             print(f"pridected price {round(pridected_price, 2) + error} less than today price {price}. SELL")
             while True:
