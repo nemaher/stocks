@@ -1,6 +1,4 @@
-from configparser import ConfigParser
 import os
-from pathlib import Path
 
 import alpaca_trade_api as tradeapi
 import click
@@ -57,12 +55,19 @@ def trade_stocks(trade_api, symbol, save_path):
 @click.option("--symbol", required=True, type=str)
 @click.option("--upload-path", default="model.h5", type=str)
 def buy_stocks(trade_api, symbol, upload_path):
-    with open(f'{upload_path}/{symbol}_model.yml') as f:
-        df_config = yaml.safe_load(f)
+    for file in os.listdir(upload_path):
+        if file.endswith("_model.yml"):
+            with open(f'{upload_path}/{file}') as f:
+                df_config = yaml.safe_load(f)
+            error = df_config.get('error')
 
-    formatted_df = pickle.load(open(f'{upload_path}/{symbol}_model.pkl', "rb"))
-    model = load_model(f'{upload_path}/{symbol}_model.h5')
-    error = df_config.get('error')
-    scaler = pickle.load(open(f'{upload_path}/{symbol}_scaler.pkl', "rb"))
+        if file.endswith("_model.pkl"):
+            formatted_df = pickle.load(open(f'{upload_path}/{file}', "rb"))
+
+        if file.endswith("_model.h5"):
+            model = load_model(f'{upload_path}/{file}')
+
+        if file.endswith("_scaler.pkl"):
+            scaler = pickle.load(open(f'{upload_path}/{file}', "rb"))
 
     stocks.trade_stock(trade_api, symbol, formatted_df, model, error, scaler)
