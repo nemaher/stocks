@@ -55,7 +55,7 @@ def trade_stocks(trade_api, symbols, save_path):
 @click.pass_obj
 @click.option("--upload-path", default="artifacts", type=str)
 def buy_stocks(trade_api, upload_path):
-    for directory in [dI for dI in os.listdir('stocks') if os.path.isdir(os.path.join('stocks',dI)) and dI != "__pycache__"]:
+    for directory in [dI for dI in os.listdir(upload_path) if os.path.isdir(os.path.join(upload_path,dI))]:
         print(f"Symbol {directory}")
         symbol = directory
         for file in os.listdir(f"{upload_path}/{directory}"):
