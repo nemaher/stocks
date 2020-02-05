@@ -25,7 +25,7 @@ def trade_stocks(trade_api, symbols, save_path):
     for symbol in symbols.split(","):
         print(f"Training for {symbol}")
         os.mkdir(f"{save_path}/{symbol}")
-        save_path = f"{save_path}/{symbol}"
+        symbol_save_path = f"{save_path}/{symbol}"
         data_df = stocks.get_trade_data(trade_api, symbol)
 
         formatted_df = stocks.format_data(data_df)
@@ -41,15 +41,15 @@ def trade_stocks(trade_api, symbols, save_path):
             if abs(error) < low_error:
                 low_error = abs(error)
 
-                formatted_df.to_pickle(f'{save_path}/{symbol}_model.pkl')
+                formatted_df.to_pickle(f'{symbol_save_path}/{symbol}_model.pkl')
 
-                model.save(f'{save_path}/{symbol}_model.h5')
+                model.save(f'{symbol_save_path}/{symbol}_model.h5')
 
                 dict_file = {'error': float(error)}
-                with open(rf'{save_path}/{symbol}_model.yml', 'w') as file:
+                with open(rf'{symbol_save_path}/{symbol}_model.yml', 'w') as file:
                     yaml.dump(dict_file, file)
 
-                pickle.dump(scaler, open(f'{save_path}/{symbol}_scaler.pkl', 'wb'))
+                pickle.dump(scaler, open(f'{symbol_save_path}/{symbol}_scaler.pkl', 'wb'))
 
         stocks.traiding_test(formatted_df, model, error)
 
