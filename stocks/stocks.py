@@ -186,7 +186,7 @@ def trade_stock(trade_api, ticker_symbol, df, model, error=0, scaler=scaler):
         est_price = pridected_price + error
         buy_price = est_price - (est_price * .01)
         if buy_price > price:
-            print(f"pridected price {pridected_price + error} greater than today price {price}. BUY")
+            print(f"predicted price {pridected_price + error} greater than today price {price}. BUY")
             # while True:
             try:
                 trade_api.submit_order(
@@ -211,3 +211,5 @@ def trade_stock(trade_api, ticker_symbol, df, model, error=0, scaler=scaler):
                     )
                 except Exception:
                     return
+        else:
+            print(f"Predicted price {pridected_price + error}, today price {price}. Did not buy or sell stock")
