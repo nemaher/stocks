@@ -19,7 +19,7 @@ def cli(ctx):
 
 @cli.command()
 @click.pass_obj
-@click.option("--symbol", required=True, type=list)
+@click.option("--symbols", required=True, type=list)
 @click.option("--save-path", required=True, type=str)
 def trade_stocks(trade_api, symbols, save_path):
     for symbol in symbols:
