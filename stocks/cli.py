@@ -52,22 +52,23 @@ def trade_stocks(trade_api, symbol, save_path):
 
 @cli.command()
 @click.pass_obj
-@click.option("--symbol", required=True, type=str)
-@click.option("--upload-path", default="model.h5", type=str)
-def buy_stocks(trade_api, symbol, upload_path):
-    for file in os.listdir(upload_path):
-        if file.endswith("_model.yml"):
-            with open(f'{upload_path}/{file}') as f:
-                df_config = yaml.safe_load(f)
-            error = df_config.get('error')
+@click.option("--upload-path", default="artifacts", type=str)
+def buy_stocks(trade_api, upload_path):
+    for directory in os.listdir(upload_path):
+        symbol = directory
+        for file in os.listdir(f"{upload_path}/{directory}"):
+            if file.endswith("_model.yml"):
+                with open(f'{upload_path}/{file}') as f:
+                    df_config = yaml.safe_load(f)
+                error = df_config.get('error')
 
-        if file.endswith("_model.pkl"):
-            formatted_df = pickle.load(open(f'{upload_path}/{file}', "rb"))
+            if file.endswith("_model.pkl"):
+                formatted_df = pickle.load(open(f'{upload_path}/{file}', "rb"))
 
-        if file.endswith("_model.h5"):
-            model = load_model(f'{upload_path}/{file}')
+            if file.endswith("_model.h5"):
+                model = load_model(f'{upload_path}/{file}')
 
-        if file.endswith("_scaler.pkl"):
-            scaler = pickle.load(open(f'{upload_path}/{file}', "rb"))
+            if file.endswith("_scaler.pkl"):
+                scaler = pickle.load(open(f'{upload_path}/{file}', "rb"))
 
     stocks.trade_stock(trade_api, symbol, formatted_df, model, error, scaler)

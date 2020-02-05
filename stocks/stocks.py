@@ -183,7 +183,9 @@ def trade_stock(trade_api, ticker_symbol, df, model, error=0, scaler=scaler):
     price = trade_api.polygon.snapshot(ticker_symbol).ticker["day"]["c"]
 
     if price != 0:
-        if pridected_price + error > price:
+        est_price = pridected_price + error
+        buy_price = est_price - (est_price * .01)
+        if buy_price > price:
             print(f"pridected price {pridected_price + error} greater than today price {price}. BUY")
             # while True:
             try:
@@ -196,7 +198,7 @@ def trade_stock(trade_api, ticker_symbol, df, model, error=0, scaler=scaler):
                 )
             except Exception:
                 return
-        else:
+        elif est_price < price:
             print(f"pridected price {round(pridected_price, 2) + error} less than today price {price}. SELL")
             while True:
                 try:

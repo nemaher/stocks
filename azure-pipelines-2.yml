@@ -47,7 +47,7 @@ steps:
       containerRegistry: 'dockerHub'
       repository: 'nemaher/stocks'
       command: 'run'
-      arguments: '-e key_id=$(alpaca_key_id) -e secret_key=$(alpaca_secret_key) -v $(system.defaultworkingdirectory)/artifacts:/artifacts nemaher/stocks buy-stocks --symbol $(symbol) --upload-path artifacts/$(symbol)'
+      arguments: '-e key_id=$(alpaca_key_id) -e secret_key=$(alpaca_secret_key) -v $(system.defaultworkingdirectory)/artifacts:/artifacts nemaher/stocks buy-stocks --upload-path artifacts'
       addPipelineData: false
 
   - script: ls $(system.defaultworkingdirectory)/artifacts
