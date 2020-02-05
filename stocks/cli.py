@@ -22,7 +22,7 @@ def cli(ctx):
 @click.option("--symbols", required=True, type=str)
 @click.option("--save-path", required=True, type=str)
 def trade_stocks(trade_api, symbols, save_path):
-    for symbol in symbols.split(" "):
+    for symbol in symbols.split(","):
         print(f"Training for {symbol}")
         data_df = stocks.get_trade_data(trade_api, symbol)
 
