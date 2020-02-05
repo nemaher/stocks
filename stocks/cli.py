@@ -58,7 +58,9 @@ def buy_stocks(trade_api, upload_path):
     for directory in [dI for dI in os.listdir(upload_path) if os.path.isdir(os.path.join(upload_path,dI))]:
         print(f"Symbol {directory}")
         symbol = directory
-        for file in os.listdir(f"{upload_path}/{directory}"):
+        upload_path = f"{upload_path}/{directory}"
+
+        for file in os.listdir(upload_path):
             if file.endswith("_model.yml"):
                 with open(f'{upload_path}/{file}') as f:
                     df_config = yaml.safe_load(f)
