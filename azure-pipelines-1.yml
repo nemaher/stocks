@@ -56,6 +56,6 @@ stages:
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-        ArtifactName: '$(symbol)'
+        ArtifactName: 'stocks'
         publishLocation: 'Container'
 

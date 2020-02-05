@@ -24,6 +24,8 @@ def cli(ctx):
 def trade_stocks(trade_api, symbols, save_path):
     for symbol in symbols.split(","):
         print(f"Training for {symbol}")
+        os.mkdir(f"{save_path}/{symbol}")
+        save_path = f"{save_path}/{symbol}"
         data_df = stocks.get_trade_data(trade_api, symbol)
 
         formatted_df = stocks.format_data(data_df)
@@ -54,7 +56,7 @@ def trade_stocks(trade_api, symbols, save_path):
 
 @cli.command()
 @click.pass_obj
-@click.option("--upload-path", default="artifacts", type=str)
+@click.option("--upload-path", default="artifacts/stocks", type=str)
 def buy_stocks(trade_api, upload_path):
     for directory in [dI for dI in os.listdir(upload_path) if os.path.isdir(os.path.join(upload_path,dI))]:
         print(f"Symbol {directory}")
