@@ -200,17 +200,16 @@ def trade_stock(trade_api, ticker_symbol, df, model, error=0, scaler=scaler):
                 return
         elif est_price < price:
             print(f"pridected price {round(pridected_price, 2) + error} less than today price {price}. SELL")
-            while True:
-                try:
-                    trade_api.submit_order(
-                        symbol=ticker_symbol,
-                        qty=int(trade_api.get_position(ticker_symbol).qty),
-                        side='sell',
-                        type='market',
-                        time_in_force='day',
-                    )
-                except Exception as err:
-                    print(err)
-                    return
+            try:
+                trade_api.submit_order(
+                    symbol=ticker_symbol,
+                    qty=int(trade_api.get_position(ticker_symbol).qty),
+                    side='sell',
+                    type='market',
+                    time_in_force='day',
+                )
+            except Exception as err:
+                print(err)
+                return
         else:
             print(f"Predicted price {pridected_price + error}, today price {price}. Did not buy or sell stock")
