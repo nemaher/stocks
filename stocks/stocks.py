@@ -209,7 +209,8 @@ def trade_stock(trade_api, ticker_symbol, df, model, error=0, scaler=scaler):
                         type='market',
                         time_in_force='day',
                     )
-                except Exception:
+                except Exception as err:
+                    print(err)
                     return
         else:
             print(f"Predicted price {pridected_price + error}, today price {price}. Did not buy or sell stock")
