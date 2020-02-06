@@ -204,7 +204,7 @@ def trade_stock(trade_api, ticker_symbol, df, model, error=0, scaler=scaler):
                 try:
                     trade_api.submit_order(
                         symbol=ticker_symbol,
-                        qty=1,
+                        qty=int(trade_api.get_position(ticker_symbol).qty),
                         side='sell',
                         type='market',
                         time_in_force='day',
