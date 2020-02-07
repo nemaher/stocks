@@ -27,6 +27,10 @@ steps:
     inputs:
       script: find . -type f -name "*.py" | xargs black --check --diff
   - task: CmdLine@2
+    displayName: 'Import Sort'
+    inputs:
+      script: isort urls.py --check-only
+  - task: CmdLine@2
     displayName: 'Security'
     inputs:
       script:

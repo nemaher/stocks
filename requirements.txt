@@ -3,6 +3,7 @@ bandit
 black
 coverage
 click
+isort
 matplotlib
 pandas
 pytest
