@@ -1,2 +1,2 @@
 [bandit]
-exclude: stocks/test/
+exclude: test/

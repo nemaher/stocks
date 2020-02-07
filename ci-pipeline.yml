@@ -29,7 +29,7 @@ steps:
   - task: CmdLine@2
     displayName: 'Import Sort'
     inputs:
-      script: isort urls.py --check-only
+      script: isort stocks/ --check-only
   - task: CmdLine@2
     displayName: 'Security'
     inputs:
