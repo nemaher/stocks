@@ -16,11 +16,32 @@ steps:
       addToPath: true
       architecture: 'x64'
   - task: CmdLine@2
+    displayName: 'Install Requirements'
     inputs:
       script: pip install -r requirements.txt
   - task: CmdLine@2
+    displayName: 'Format'
     inputs:
       script: find . -type f -name "*.py" | xargs black --check --diff
+  - task: CmdLine@2
+    displayName: 'Security'
+    inputs:
+      script:
+        |
+         bandit -r stocks/ --aggregate vuln --number 5 -1 -i --format 'yaml' --output stocks/security.yml || true
+         cat stocks/security.yml
+  - task: CmdLine@2
+    displayName: 'Coverage'
+    inputs:
+      script: 
+        |
+        coverage run --branch --source stocks/test/
+        coverage report --show-missing
+  - task: CmdLine@2
+    displayName: 'Test'
+    inputs:
+      script: pytest stocks/test/
+  
 
 
 
