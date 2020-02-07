@@ -7,12 +7,12 @@ trigger:
 #  paths:
 #    exclude: ["build-pipeline.yml", "train-pipeline.yml"]
 
-resources:
-  pipelines:
-  - pipeline: ci-pipeline
-    source: ci-pipeline
 #resources:
-#- repo: self
+#  pipelines:
+#  - pipeline: ci-pipeline
+#    source: ci-pipeline
+resources:
+- repo: self
 
 variables:
   tag: '$(Build.BuildId)'

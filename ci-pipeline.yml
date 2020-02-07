@@ -18,7 +18,10 @@ steps:
   - task: CmdLine@2
     displayName: 'Install Requirements'
     inputs:
-      script: pip install -r requirements.txt
+      script:
+        |
+        pip install -r requirements.txt
+        python setup.py develop
   - task: CmdLine@2
     displayName: 'Format'
     inputs:
@@ -28,14 +31,14 @@ steps:
     inputs:
       script:
         |
-         bandit -r stocks/ --aggregate vuln --number 5 -l -i --format 'yaml' --output stocks/security.yml || true
+         bandit -r stocks/ -s stocks/tests/ --aggregate vuln --number 5 -l -i --format 'yaml' --output stocks/security.yml
          cat stocks/security.yml
   - task: CmdLine@2
     displayName: 'Coverage'
     inputs:
       script: 
         |
-        coverage run --branch --source stocks/test/ -m pytest
+        coverage run --branch --source stocks/ -m pytest
         coverage report --show-missing
   - task: CmdLine@2
     displayName: 'Test'
