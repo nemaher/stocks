@@ -31,7 +31,7 @@ steps:
     inputs:
       script:
         |
-         bandit -r stocks/ -s stocks/tests/ --aggregate vuln --number 5 -l -i --format 'yaml' --output stocks/security.yml
+         bandit -r stocks/ --aggregate vuln --number 5 -l -i --format 'yaml' --output stocks/security.yml
          cat stocks/security.yml
   - task: CmdLine@2
     displayName: 'Coverage'
