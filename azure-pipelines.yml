@@ -18,7 +18,7 @@ steps:
   - task: CmdLine@2
     inputs:
       script: |
-        pip install black
+        pip3 install black
         find . -type f -name "*.py" | xargs black --check --diff
 
 
