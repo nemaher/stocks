@@ -11,13 +11,6 @@ schedules:
     - master
   always: True
 
-- cron: '30/1 14 * * 1-5'
-  displayName: Daily run
-  branches:
-    include:
-    - master
-  always: True
-
 trigger: none
 
 pool:
