@@ -14,7 +14,6 @@ steps:
     inputs:
       script: |
         docker-compose run python
-        pip install black
         find . -type f -name "*.py" | xargs black --check --diff
 
 
