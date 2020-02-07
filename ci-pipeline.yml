@@ -28,14 +28,14 @@ steps:
     inputs:
       script:
         |
-         bandit -r stocks/ --aggregate vuln --number 5 -1 -i --format 'yaml' --output stocks/security.yml || true
+         bandit -r stocks/ --aggregate vuln --number 5 -l -i --format 'yaml' --output stocks/security.yml || true
          cat stocks/security.yml
   - task: CmdLine@2
     displayName: 'Coverage'
     inputs:
       script: 
         |
-        coverage run --branch --source stocks/test/
+        coverage run --branch --source stocks/test/ -m pytest
         coverage report --show-missing
   - task: CmdLine@2
     displayName: 'Test'

@@ -9,8 +9,8 @@ trigger:
 
 resources:
   pipelines:
-  - pipeline: nemaher.stocks CI
-    source: nemaher.stocks CI
+  - pipeline: ci-pipeline
+    source: ci-pipeline
 #resources:
 #- repo: self
 
