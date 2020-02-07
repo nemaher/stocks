@@ -44,7 +44,7 @@ stages:
         containerRegistry: 'dockerHub'
         repository: 'nemaher/stocks'
         command: 'run'
-        arguments: '-e key_id=$(alpaca_key_id) -e secret_key=$(alpaca_secret_key) -v $(system.defaultworkingdirectory)/config:/config -v $(system.defaultworkingdirectory)/output:/output nemaher/stocks trade-stocks --symbols $(symbols) --save-path /output'
+        arguments: '-e key_id=$(alpaca_key_id) -e secret_key=$(alpaca_secret_key) -v $(system.defaultworkingdirectory)/config:/config -v $(system.defaultworkingdirectory)/output:/output nemaher/stocks train-model --symbols $(symbols) --save-path /output'
         addPipelineData: false
     - task: CopyFiles@2
       displayName: 'Copy Files to: $(build.artifactstagingdirectory)'

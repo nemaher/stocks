@@ -7,4 +7,4 @@ services:
             - .:/workspace
         working_dir: /workspace
         entrypoint: /bin/bash
-        command: -c 'python setup.py develop && /bin/bash'
+        command: -c 'python setup.py develop && pip install -r requirements.txt && /bin/bash'

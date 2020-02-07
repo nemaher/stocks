@@ -5,7 +5,7 @@
 trigger:
  - master
 #  paths:
-#    exclude: ["azure-pipelines.yml", "azure-pipelines-1.yml"]
+#    exclude: ["build-pipeline.yml", "train-pipeline.yml"]
 
 resources:
 - repo: self

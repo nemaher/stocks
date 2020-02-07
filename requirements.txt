@@ -3,6 +3,7 @@ black
 click
 matplotlib
 pandas
+pytest
 pyyaml
 seaborn
 sklearn
