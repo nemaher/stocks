@@ -8,7 +8,11 @@ trigger:
 #    exclude: ["build-pipeline.yml", "train-pipeline.yml"]
 
 resources:
-- repo: self
+  pipelines:
+  - pipeline: nemaher.stocks CI
+    source: nemaher.stocks CI
+#resources:
+#- repo: self
 
 variables:
   tag: '$(Build.BuildId)'
