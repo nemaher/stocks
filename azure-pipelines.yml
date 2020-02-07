@@ -17,9 +17,10 @@ steps:
       architecture: 'x64'
   - task: CmdLine@2
     inputs:
-      script: |
-        pip3 install black
-        find . -type f -name "*.py" | xargs black --check --diff
+      script: pip install -r requirements.txt
+  - task: CmdLine@2
+    inputs:
+      script: find . -type f -name "*.py" | xargs black --check --diff
 
 
 
