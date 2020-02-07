@@ -17,8 +17,8 @@ def cli(ctx):
     :param ctx: Context to pass to methods
     """
 
-    key_id = os.environ['key_id']
-    secret_key = os.environ['secret_key']
+    key_id = os.environ["key_id"]
+    secret_key = os.environ["secret_key"]
     ctx.obj = tradeapi.REST(key_id, secret_key)
 
 
@@ -45,7 +45,9 @@ def train_model(trade_api, symbols, save_path):
         # Get training data from Alpaca API, format it and create test set
         data_df = stocks.get_trade_data(trade_api, symbol)
         formatted_df = stocks.format_data(data_df)
-        X_train, X_test, y_train, y_test, scaler = stocks.create_training_data(formatted_df)
+        X_train, X_test, y_train, y_test, scaler = stocks.create_training_data(
+            formatted_df
+        )
 
         low_error = 100000
 
@@ -53,7 +55,9 @@ def train_model(trade_api, symbols, save_path):
         for _ in range(0, 5):
 
             # train model with formatted data and test set
-            model = stocks.train_model(len(formatted_df.columns) - 1, X_train, X_test, y_train, y_test)
+            model = stocks.train_model(
+                len(formatted_df.columns) - 1, X_train, X_test, y_train, y_test
+            )
 
             # analyze data and get mean error predictions are off
             error = stocks.analyze(formatted_df, model, X_test, y_test)
@@ -62,15 +66,17 @@ def train_model(trade_api, symbols, save_path):
             if abs(error) < low_error:
                 low_error = abs(error)
 
-                formatted_df.to_pickle(f'{symbol_save_path}/{symbol}_model.pkl')
+                formatted_df.to_pickle(f"{symbol_save_path}/{symbol}_model.pkl")
 
-                model.save(f'{symbol_save_path}/{symbol}_model.h5')
+                model.save(f"{symbol_save_path}/{symbol}_model.h5")
 
-                dict_file = {'error': float(error)}
-                with open(rf'{symbol_save_path}/{symbol}_model.yml', 'w') as file:
+                dict_file = {"error": float(error)}
+                with open(rf"{symbol_save_path}/{symbol}_model.yml", "w") as file:
                     yaml.dump(dict_file, file)
 
-                pickle.dump(scaler, open(f'{symbol_save_path}/{symbol}_scaler.pkl', 'wb'))
+                pickle.dump(
+                    scaler, open(f"{symbol_save_path}/{symbol}_scaler.pkl", "wb")
+                )
 
         # test model makes profit
         stocks.trading_test(formatted_df, model, error)
@@ -87,7 +93,11 @@ def trade_stocks(trade_api, upload_path):
     """
 
     # Get all directory names within the upload path
-    for directory in [dI for dI in os.listdir(upload_path) if os.path.isdir(os.path.join(upload_path, dI))]:
+    for directory in [
+        dI
+        for dI in os.listdir(upload_path)
+        if os.path.isdir(os.path.join(upload_path, dI))
+    ]:
         print(f"Symbol {directory}")
         symbol = directory
         symbol_upload_path = f"{upload_path}/{directory}"
@@ -100,14 +110,15 @@ def trade_stocks(trade_api, upload_path):
             #     error = df_config.get('error')
 
             if file.endswith("_model.pkl"):
-                formatted_df = pickle.load(open(f'{symbol_upload_path}/{file}', "rb"))
+                formatted_df = pickle.load(open(f"{symbol_upload_path}/{file}", "rb"))
 
             if file.endswith("_model.h5"):
-                model = load_model(f'{symbol_upload_path}/{file}')
+                model = load_model(f"{symbol_upload_path}/{file}")
 
             if file.endswith("_scaler.pkl"):
-                scaler = pickle.load(open(f'{symbol_upload_path}/{file}', "rb"))
-
+                scaler = pickle.load(open(f"{symbol_upload_path}/{file}", "rb"))
 
         # Trade the symbols stock
-        stocks.trade_stock(trade_api, symbol, formatted_df, model, error=0, scaler=scaler)
+        stocks.trade_stock(
+            trade_api, symbol, formatted_df, model, error=0, scaler=scaler
+        )

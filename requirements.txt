@@ -1,5 +1,7 @@
 alpaca-trade-api
+bandit
 black
+coverage
 click
 matplotlib
 pandas
