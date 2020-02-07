@@ -10,10 +10,15 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.7'
+      addToPath: true
+      architecture: 'x64'
   - task: CmdLine@2
     inputs:
       script: |
-        docker-compose run python
+        pip install black
         find . -type f -name "*.py" | xargs black --check --diff
 
 
