@@ -22,7 +22,7 @@ steps:
       containerRegistry: 'dockerHub'
       repository: 'nemaher/stocks'
       command: 'run'
-      arguments: pip install black && find . --type f -name "*.py" -not -path stocks/ | xargs black --check --diff
+      arguments: 'pip install black && find . --type f -name "*.py" -not -path stocks/ | xargs black --check --diff'
       addPipelineData: false
 
 
