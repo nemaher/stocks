@@ -74,6 +74,7 @@ def test_df():
 def test_model():
     """Load in the test trained TensorFlow model."""
     import os
+
     print(os.listdir("./"))
     return load_model("stocks/test/TEST_files/TEST_model.h5")
 
