@@ -74,7 +74,7 @@ def test_df():
 def test_model():
     """Load in the test trained TensorFlow model."""
 
-    return load_model("./stocks/test/TEST_files/TEST_model.h5")
+    return load_model("stocks/test/TEST_files/TEST_model.h5")
 
 
 @pytest.fixture
