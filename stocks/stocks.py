@@ -1,17 +1,12 @@
-import pandas as pd
 import numpy as np
-
-from sklearn.preprocessing import MinMaxScaler
-from sklearn.metrics import (
-    mean_squared_error,
-    mean_absolute_error,
-    explained_variance_score,
-)
+import pandas as pd
+from sklearn.metrics import (explained_variance_score, mean_absolute_error,
+                             mean_squared_error)
 from sklearn.model_selection import train_test_split
-
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Activation, Dropout
+from sklearn.preprocessing import MinMaxScaler
 from tensorflow.keras.callbacks import EarlyStopping
+from tensorflow.keras.layers import Activation, Dense, Dropout
+from tensorflow.keras.models import Sequential
 
 scaler = MinMaxScaler()
 

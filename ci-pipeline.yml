@@ -29,13 +29,16 @@ steps:
   - task: CmdLine@2
     displayName: 'Import Sort'
     inputs:
-      script: isort stocks/ --check-only
+      script:
+      |
+      isort **/*.py --dif
+      isort **/*.py --check-only
   - task: CmdLine@2
     displayName: 'Security'
     inputs:
       script:
         |
-         bandit -r stocks/ --aggregate vuln --number 5 -l -i --format 'yaml' --output stocks/security.yml
+         bandit -r stocks/ -c .bandit --aggregate vuln --number 5 -l -i --format 'yaml' --output stocks/security.yml
          cat stocks/security.yml
   - task: CmdLine@2
     displayName: 'Coverage'
