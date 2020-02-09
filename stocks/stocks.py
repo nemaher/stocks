@@ -52,14 +52,11 @@ def format_data(df, days=365):
         # create new row with year and current close data
         new_row = [row["Year"], row["close"]]
         for x in range(days + 1):
-            try:
-                if x != 0:
-                    # append past close data for amount of days specified
-                    new_row.append(df.iloc[index - x]["close"])
-                else:
-                    continue
-            except Exception:
-                pass
+            if x != 0:
+                # append past close data for amount of days specified
+                new_row.append(df.iloc[index - x]["close"])
+            else:
+                continue
 
         # Add new row to data
         new_df.append(new_row)
