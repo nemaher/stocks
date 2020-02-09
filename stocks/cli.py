@@ -3,8 +3,8 @@ import pickle
 
 import alpaca_trade_api as tradeapi
 import click
-from tensorflow.keras.models import load_model
 import yaml
+from tensorflow.keras.models import load_model
 
 import stocks.stocks as stocks
 
