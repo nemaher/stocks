@@ -66,7 +66,9 @@ def formatted_df():
 @pytest.fixture
 def test_df():
     """Load in the test formatted DataFrame."""
+    import os
 
+    print(os.listdir("./"))
     return pickle.load(open("./stocks/test/TEST_files/TEST_model.pkl", "rb"))
 
 
