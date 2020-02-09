@@ -1,7 +1,11 @@
 import pytest
 import datetime
+
 import pandas as pd
+import pickle
 import numpy as np
+import yaml
+from tensorflow.keras.models import load_model
 
 
 @pytest.fixture
@@ -57,3 +61,24 @@ def formatted_df():
     )
     # Create DataFrame
     return pd.DataFrame(data=verify_data, columns=verify_columns)
+
+
+@pytest.fixture
+def test_df():
+    """Load in the test formatted DataFrame."""
+
+    return pickle.load(open("./stocks/test/TEST_files/TEST_model.pkl", "rb"))
+
+
+@pytest.fixture
+def test_model():
+    """Load in the test trained TensorFlow model."""
+
+    return load_model("./stocks/test/TEST_files/TEST_model.h5")
+
+
+@pytest.fixture
+def test_scaler():
+    """Load in the test scaler"""
+
+    return pickle.load(open("./stocks/test/TEST_files/TEST_scaler.pkl", "rb"))

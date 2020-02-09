@@ -1,8 +1,7 @@
-from stocks import stocks
-import pandas as pd
-import numpy as np
 from unittest.mock import MagicMock
 from collections import namedtuple
+
+from stocks import stocks
 
 
 def test_get_training_data():
@@ -37,15 +36,11 @@ def test_create_training_data(formatted_df):
 
     # assert 2 data points
     assert len(X_train[0]) == 2
-    print(X_train)
     assert len(X_test[0]) == 2
-    print(X_test)
 
     # assert 1 test data point
     assert len(y_train) == 2  # 2 data points of data
-    print(y_train)
     assert len(y_test) == 1
-    print(y_test)
 
     # assert scaler is a MinMax 0-1 range
     assert str(scaler) == "MinMaxScaler(copy=True, feature_range=(0, 1))"
@@ -59,3 +54,10 @@ def test_train_model():
     )
 
     assert "tensorflow.python.keras.engine.sequential.Sequential" in str(test_model)
+
+
+def test_analyze(test_df, test_model):
+    """Test that analyzer is consistent with given DataFrame and model"""
+
+    error = stocks.analyze(test_df, test_model, [[2.0, 0.33]], [18.02])
+    assert error == 5.21
