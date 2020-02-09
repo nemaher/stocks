@@ -1,7 +1,10 @@
 import numpy as np
 import pandas as pd
-from sklearn.metrics import (explained_variance_score, mean_absolute_error,
-                             mean_squared_error)
+from sklearn.metrics import (
+    explained_variance_score,
+    mean_absolute_error,
+    mean_squared_error,
+)
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 from tensorflow.keras.callbacks import EarlyStopping
