@@ -4,12 +4,12 @@
 # https://aka.ms/yaml
 
 schedules:
-- cron: '*/1 14-22 * * 1-5'
-  displayName: Daily run
-  branches:
-    include:
-    - master
-  always: True
+  - cron: '*/1 14-22 * * 1-5'
+    displayName: Daily run
+    branches:
+      include:
+      - master
+    always: True
 
 trigger: none
 
