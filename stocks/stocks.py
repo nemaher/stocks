@@ -1,3 +1,4 @@
+import datetime
 import numpy as np
 import pandas as pd
 from sklearn.metrics import (
@@ -25,7 +26,8 @@ def get_trade_data(trade_api, ticker_symbol):
     for i in range(3):
         try:
             # get Training data from alpaca api (1265 days is about 5 years)
-            return trade_api.polygon.historic_trades_v2("day", ticker_symbol, limit=1265).df
+            return trade_api.polygon.historic_agg(ticker_symbol, 1, 'day', _from=datetime.datetime.now() - datetime.timedelta(days=1265), to=datetime.datetime.now())
+            # return trade_api.polygon.historic_agg("day", ticker_symbol, limit=1265).df
         # If it failed try again
         except Exception as e:
             print(e)
