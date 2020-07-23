@@ -267,38 +267,34 @@ def trade_stock(trade_api, ticker_symbol, df, model, error=0, scaler=scaler):
     # If price return from API is not 0 (market is open)
     if price != 0:
 
-        # If buy price is greater than actual price buy one stock
-        if buy_price > price:
-            print(
-                f"Predicted price {predicted_price + error} greater than today price {price}. BUY"
+        print(
+            f"Predicted price {predicted_price + error} greater than today price {price}. BUY"
+        )
+        try:
+            trade_api.submit_order(
+                symbol=ticker_symbol,
+                qty=1,
+                side="buy",
+                type="market",
+                time_in_force="day",
             )
-            try:
-                trade_api.submit_order(
-                    symbol=ticker_symbol,
-                    qty=1,
-                    side="buy",
-                    type="market",
-                    time_in_force="day",
-                )
-            except Exception:
-                return
+        except Exception:
+            return
 
-        # If estimated price is less than stock sell all the stock
-        elif est_price < price:
-            print(
-                f"Predicted price {round(predicted_price, 2) + error} less than today price {price}. SELL"
+        print(
+            f"Predicted price {round(predicted_price, 2) + error} less than today price {price}. SELL"
+        )
+        try:
+            trade_api.submit_order(
+                symbol=ticker_symbol,
+                qty=int(trade_api.get_position(ticker_symbol).qty),
+                side="sell",
+                type="market",
+                time_in_force="day",
             )
-            try:
-                trade_api.submit_order(
-                    symbol=ticker_symbol,
-                    qty=int(trade_api.get_position(ticker_symbol).qty),
-                    side="sell",
-                    type="market",
-                    time_in_force="day",
-                )
-            except Exception as err:
-                print(err)
-                return
+        except Exception as err:
+            print(err)
+            return
 
         # Stock price is not 1% less than estimated price. Do not buy stock.
         else:
