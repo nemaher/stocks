@@ -44,6 +44,7 @@ def train_model(trade_api, symbols, save_path):
 
         # Get training data from Alpaca API, format it and create test set
         data_df = stocks.get_trade_data(trade_api, symbol)
+        print(data_df)
         formatted_df = stocks.format_data(data_df)
         X_train, X_test, y_train, y_test, scaler = stocks.create_training_data(
             formatted_df
