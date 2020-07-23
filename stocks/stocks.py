@@ -44,8 +44,8 @@ def format_data(df, days=365):
 
     #  replace day with just the year
     df = df.reset_index()
-    df["day"] = pd.to_datetime(df["day"])
-    df["Year"] = df["day"].apply(lambda date: date.year)
+    df["day"] = pd.to_datetime(df["timestamp"])
+    df["Year"] = df["timestamp"].apply(lambda date: date.year)
 
     #  Create a new data frame with historical data
     new_df = []
