@@ -25,7 +25,7 @@ def get_trade_data(trade_api, ticker_symbol):
     for i in range(3):
         try:
             # get Training data from alpaca api (1265 days is about 5 years)
-            return trade_api.polygon.historic_agg_v2("day", ticker_symbol, limit=1265).df
+            return trade_api.polygon.historic_trades_v2("day", ticker_symbol, limit=1265).df
         # If it failed try again
         except Exception as e:
             print(e)
