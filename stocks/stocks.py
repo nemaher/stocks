@@ -264,7 +264,7 @@ def trade_stock(trade_api, ticker_symbol, df, model, error=0, scaler=scaler):
     buy_price = est_price - (est_price * 0.01)
 
     # actual price from alpaca API
-    price = trade_api.polygon.last_quote(ticker_symbol).ticker["day"]["c"]
+    price = trade_api.polygon.snapshot(ticker_symbol).ticker["day"]["c"]
 
     # If price return from API is not 0 (market is open)
     if price != 0:
