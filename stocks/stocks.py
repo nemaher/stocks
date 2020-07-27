@@ -297,9 +297,3 @@ def trade_stock(trade_api, ticker_symbol, df, model, error=0, scaler=scaler):
             except Exception as err:
                 print(err)
                 return
-
-            # Stock price is not 1% less than estimated price. Do not buy stock.
-            else:
-                print(
-                    f"Predicted price {est_price}, today price {price}. Stock price is {price/est_price}% less than estimated price. Did not buy or sell stock"
-                )
