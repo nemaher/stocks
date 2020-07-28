@@ -268,32 +268,32 @@ def trade_stock(trade_api, ticker_symbol, df, model, error=0, scaler=scaler):
 
     # If price return from API is not 0 (market is open)
     if price != 0:
-        if predicted_price > price:
-            print(
-                f"Predicted price {round(predicted_price)} greater than today price {price}. BUY"
+        print(
+            f"Predicted price {round(predicted_price, 4)} greater than today price {price}. BUY"
+        )
+        try:
+            trade_api.submit_order(
+                symbol=ticker_symbol,
+                qty=1,
+                side="buy",
+                type="market",
+                time_in_force="day",
             )
-            try:
-                trade_api.submit_order(
-                    symbol=ticker_symbol,
-                    qty=1,
-                    side="buy",
-                    type="market",
-                    time_in_force="day",
-                )
-            except Exception:
-                return
-        else:
-            print(
-                f"Predicted price {round(predicted_price, 2)} less than today price {price}. SELL"
+        except Exception as err:
+            print(err)
+            pass
+
+        print(
+            f"Predicted price {round(predicted_price, 4)} less than today price {price}. SELL"
+        )
+        try:
+            trade_api.submit_order(
+                symbol=ticker_symbol,
+                qty=int(trade_api.get_position(ticker_symbol).qty),
+                side="sell",
+                type="market",
+                time_in_force="day",
             )
-            try:
-                trade_api.submit_order(
-                    symbol=ticker_symbol,
-                    qty=int(trade_api.get_position(ticker_symbol).qty),
-                    side="sell",
-                    type="market",
-                    time_in_force="day",
-                )
-            except Exception as err:
-                print(err)
-                return
+        except Exception as err:
+            print(err)
+            return
