@@ -270,7 +270,7 @@ def trade_stock(trade_api, ticker_symbol, df, model, error=0, scaler=scaler):
     if price != 0:
         if predicted_price > price:
             print(
-                f"Predicted price {predicted_price + error} greater than today price {price}. BUY"
+                f"Predicted price {round(predicted_price)} greater than today price {price}. BUY"
             )
             try:
                 trade_api.submit_order(
@@ -284,7 +284,7 @@ def trade_stock(trade_api, ticker_symbol, df, model, error=0, scaler=scaler):
                 return
         else:
             print(
-                f"Predicted price {round(predicted_price, 2) + error} less than today price {price}. SELL"
+                f"Predicted price {round(predicted_price, 2)} less than today price {price}. SELL"
             )
             try:
                 trade_api.submit_order(
