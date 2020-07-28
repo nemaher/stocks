@@ -80,7 +80,7 @@ def train_model(trade_api, symbols, save_path):
                 )
 
         # test model makes profit
-        stocks.trading_test(formatted_df, model, error)
+        # stocks.trading_test(formatted_df, model, error)
 
 
 @cli.command()
