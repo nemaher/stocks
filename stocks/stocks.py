@@ -268,25 +268,26 @@ def trade_stock(trade_api, ticker_symbol, df, model, error=0, scaler=scaler):
 
     # If price return from API is not 0 (market is open)
     if price != 0:
-        print(
-            f"Predicted price {round(predicted_price, 4)} greater than today price {price}. BUY"
-        )
-        try:
-            trade_api.submit_order(
-                symbol=ticker_symbol,
-                qty=1,
-                side="buy",
-                type="market",
-                time_in_force="day",
-                take_profit=dict(
-                    limit_price=predicted_price,
-                ),
+        if predicted_price > price:
+            print(
+                f"Predicted price {round(predicted_price, 4)} greater than today price {price}. BUY"
             )
-        except Exception as err:
-            print(err)
-            pass
+            try:
+                trade_api.submit_order(
+                    symbol=ticker_symbol,
+                    qty=1,
+                    side="buy",
+                    type="market",
+                    time_in_force="day",
+                    take_profit=dict(
+                        limit_price=predicted_price,
+                    ),
+                )
+            except Exception as err:
+                print(err)
+                pass
 
-        if predicted_price < price:
+        elif predicted_price <= price:
             print(
                 f"Predicted price {round(predicted_price, 4)} less than today price {price}. SELL"
             )
